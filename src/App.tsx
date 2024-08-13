@@ -1,21 +1,40 @@
-import React from 'react';
-import './App.scss';
+import React, { useMemo, useRef, useState } from 'react';
+import { TodoList } from './components/TodoList';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
 
-interface Props {
-  onClick: () => void;
-  children: React.ReactNode;
-}
+import { FilterBy } from './types/FilterBy';
 
-export const Provider: React.FC<Props> = React.memo(({ onClick, children }) => (
-  <button type="button" onClick={onClick}>
-    {children}
-  </button>
-));
+import { useTodos } from './context/useTodos';
+import { getFilteredTodos } from './utils/Helpers';
 
 export const App: React.FC = () => {
+  const [filterBy, setfilterBy] = useState<FilterBy>(FilterBy.All);
+  const fieldTitle = useRef<HTMLInputElement>(null);
+  const { todos } = useTodos();
+
+  const filteredTodos = useMemo(
+    () => getFilteredTodos(todos, filterBy),
+    [filterBy, todos],
+  );
+
   return (
-    <div className="starter">
-      <Provider onClick={() => ({})}>TodoList</Provider>
+    <div className="todoapp">
+      <h1 className="todoapp__title">todos</h1>
+
+      <div className="todoapp__content">
+        <Header fieldTitle={fieldTitle} />
+
+        <TodoList fieldTitle={fieldTitle} todos={filteredTodos} />
+
+        {!!todos.length && (
+          <Footer
+            setFilterBy={setfilterBy}
+            filterBy={filterBy}
+            fieldTitle={fieldTitle}
+          />
+        )}
+      </div>
     </div>
   );
 };

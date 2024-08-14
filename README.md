@@ -1,6 +1,7 @@
 # TodoApp
 
 This is a simple TODO application built with React, offering essential task management features such as status filtering, task deletion, inline editing, and saving tasks to `localStorage`.
+- [DEMO LINK](https://yuliaPel.github.io/todo-app/)
 
 ## Features
 
@@ -37,6 +38,3 @@ This is a simple TODO application built with React, offering essential task mana
     ```
     Open your browser and go to http://localhost:3000 to view your application.
 
-## Demo Link
-
-- [DEMO LINK](https://yuliaPel.github.io/todo-app/)
